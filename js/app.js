@@ -126,3 +126,4 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNavbar();
 });
 function logout() { localStorage.removeItem('session_user'); window.location.href = getBaseUrl() + 'pages/login.html'; }
+//ini logout
