@@ -1,8 +1,12 @@
-// js/auth.js
 document.addEventListener('DOMContentLoaded', () => {
     if (getCurrentUser()) {
         window.location.href = 'profile.html';
         return;
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
     }
 
     const registerForm = document.getElementById('registerForm');
@@ -19,6 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+function handleLogin(e) {
+    e.preventDefault();
+    const loginEmail = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errorDiv = document.getElementById('loginError');
+
+    if (!loginEmail || !password) {
+        errorDiv.innerText = 'Email dan Password wajib diisi.';
+        errorDiv.classList.remove('d-none');
+        return;
+    }
+
+    const users = getTable('users');
+    const user = users.find(u => u.email === loginEmail && u.password === password);
+
+    if (user) {
+        localStorage.setItem('session_user', user.id);
+        window.location.href = 'profile.html'; 
+    } else {
+        errorDiv.innerText = 'Email atau Password salah.';
+        errorDiv.classList.remove('d-none');
+    }
+}
 
 function updateRegisterForm(role) {
     const groupFullName = document.getElementById('groupFullName');
