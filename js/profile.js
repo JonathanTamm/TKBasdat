@@ -47,6 +47,8 @@ function loadDashboardStats() {
     const user = getCurrentUser();
     const statsContainer = document.getElementById('dashboardStats');
     const extraContainer = document.getElementById('extraDashboardContent');
+    const pageTitle = document.querySelector('.page-title');
+    if (pageTitle) pageTitle.innerText = `Dashboard ${user.role}`;
     let html = '';
 
     if (user.role === 'Admin') {
