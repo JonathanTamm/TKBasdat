@@ -7,25 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <div class="nav-container">
-            <a href="index.html" class="logo">TikTakTuk</a>
-            <nav class="nav-links">
-                <a href="index.html" class="active">Dashboard</a>
-                <a href="pages/ticket-category.html">Kategori Tiket</a>
-                <a href="pages/order.html">Transaksi (Order)</a>
-                <a href="pages/ticket.html">Hak Masuk (Tiket)</a>
-            </nav>
-            <div class="role-selector">
-                <select id="roleSelector" aria-label="Role Selector">
-                    <option value="Admin">Login Sebagai: Admin</option>
-                    <option value="Organizer">Login Sebagai: Organizer</option>
-                    <option value="Customer">Login Sebagai: Customer</option>
-                    <option value="Guest">Guest (Belum Login)</option>
-                </select>
-            </div>
-        </div>
-    </header>
+    <header id="dynamicNavbar"></header>
 
     <main>
         <div class="hero">
