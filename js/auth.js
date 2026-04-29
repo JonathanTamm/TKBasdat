@@ -26,24 +26,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function handleLogin(e) {
     e.preventDefault();
-    const loginEmail = document.getElementById('loginEmail').value.trim();
+    const loginUsername = document.getElementById('loginUsername').value.trim();
     const password = document.getElementById('loginPassword').value;
     const errorDiv = document.getElementById('loginError');
 
-    if (!loginEmail || !password) {
-        errorDiv.innerText = 'Email dan Password wajib diisi.';
+    if (!loginUsername || !password) {
+        errorDiv.innerText = 'Username dan Password wajib diisi.';
         errorDiv.classList.remove('d-none');
         return;
     }
 
     const users = getTable('users');
-    const user = users.find(u => u.email === loginEmail && u.password === password);
+    const user = users.find(u => u.username === loginUsername && u.password === password);
 
     if (user) {
         localStorage.setItem('session_user', user.id);
         window.location.href = 'profile.html'; 
     } else {
-        errorDiv.innerText = 'Email atau Password salah.';
+        errorDiv.innerText = 'Username atau Password salah.';
         errorDiv.classList.remove('d-none');
     }
 }
