@@ -161,6 +161,7 @@ function renderNavbar() {
             <a href="${baseUrl}pages/manage-tickets.html">Manajemen Tiket</a>
             <a href="${baseUrl}pages/orders.html">Semua Order</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
+            <a href="${baseUrl}pages/artists.html">Artis</a>
             <a href="${baseUrl}pages/manage-tickets.html">Tiket (Aset)</a>
             <a href="${baseUrl}pages/orders.html">Order (Aset)</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
@@ -177,6 +178,7 @@ function renderNavbar() {
             <a href="${baseUrl}pages/manage-tickets.html">Manajemen Tiket</a>
             <a href="${baseUrl}pages/orders.html">Semua Order</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
+            <a href="${baseUrl}pages/artists.html">Artis</a>
             <a href="${baseUrl}pages/manage-tickets.html">Tiket (Aset)</a>
             <a href="${baseUrl}pages/orders.html">Order (Aset)</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
@@ -190,6 +192,7 @@ function renderNavbar() {
             <a href="${baseUrl}pages/orders.html">Pesanan</a>
             <a href="${baseUrl}pages/events.html">Cari Event</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
+            <a href="${baseUrl}pages/artists.html">Artis</a>
             <a href="${baseUrl}pages/venues.html">Venue</a>
             <a href="${baseUrl}pages/artists.html">Artis</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
