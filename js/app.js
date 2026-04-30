@@ -29,12 +29,12 @@ const initialData = {
         { id: 'tkt-1', code: 'TKT-001', orderId: 'ord-1', eventId: 'ev-1', categoryId: 'cat-1', seatId: 'seat-3' }
     ],
     promotions: [
-        { promotion_id: 'p0000000-0000-0000-0000-000000000001', promo_code: 'TIKTAK20', discount_type: 'PERCENTAGE', discount_value: 20, start_date: '2026-01-01', end_date: '2026-12-31', usage_limit: 100 },
-        { promotion_id: 'p0000000-0000-0000-0000-000000000002', promo_code: 'HEMAT50K', discount_type: 'NOMINAL', discount_value: 50000, start_date: '2026-01-01', end_date: '2026-12-31', usage_limit: 50 },
-        { promotion_id: 'p0000000-0000-0000-0000-000000000003', promo_code: 'NEWUSER30', discount_type: 'PERCENTAGE', discount_value: 30, start_date: '2026-03-01', end_date: '2026-06-30', usage_limit: 200 },
-        { promotion_id: 'p0000000-0000-0000-0000-000000000004', promo_code: 'PAYDAY100K', discount_type: 'NOMINAL', discount_value: 100000, start_date: '2026-04-25', end_date: '2026-04-30', usage_limit: 500 },
-        { promotion_id: 'p0000000-0000-0000-0000-000000000005', promo_code: 'FASILKOM50', discount_type: 'PERCENTAGE', discount_value: 50, start_date: '2026-04-01', end_date: '2026-04-30', usage_limit: 100 },
-        { promotion_id: 'p0000000-0000-0000-0000-000000000006', promo_code: 'EARLYBIRD', discount_type: 'NOMINAL', discount_value: 25000, start_date: '2026-05-01', end_date: '2026-05-15', usage_limit: 300 }
+        { promotion_id: 'f0000000-0000-0000-0000-000000000001', promo_code: 'TIKTAK20', discount_type: 'PERCENTAGE', discount_value: 20, start_date: '2026-01-01', end_date: '2026-12-31', usage_limit: 100 },
+        { promotion_id: 'f0000000-0000-0000-0000-000000000002', promo_code: 'HEMAT50K', discount_type: 'NOMINAL', discount_value: 50000, start_date: '2026-01-01', end_date: '2026-12-31', usage_limit: 50 },
+        { promotion_id: 'f0000000-0000-0000-0000-000000000003', promo_code: 'NEWUSER30', discount_type: 'PERCENTAGE', discount_value: 30, start_date: '2026-03-01', end_date: '2026-06-30', usage_limit: 200 },
+        { promotion_id: 'f0000000-0000-0000-0000-000000000004', promo_code: 'PAYDAY100K', discount_type: 'NOMINAL', discount_value: 100000, start_date: '2026-04-25', end_date: '2026-04-30', usage_limit: 500 },
+        { promotion_id: 'f0000000-0000-0000-0000-000000000005', promo_code: 'FASILKOM50', discount_type: 'PERCENTAGE', discount_value: 50, start_date: '2026-04-01', end_date: '2026-04-30', usage_limit: 100 },
+        { promotion_id: 'f0000000-0000-0000-0000-000000000006', promo_code: 'EARLYBIRD', discount_type: 'NOMINAL', discount_value: 25000, start_date: '2026-05-01', end_date: '2026-05-15', usage_limit: 300 }
     ],
     orders: [
         { order_id: 'd0000000-0000-0000-0000-000000000001', order_date: '2026-04-10T14:30:00Z', payment_status: 'Lunas', total_amount: 1200000, customer_id: 'cust-1', event_id: 'ev-1', customerName: 'Budi Santoso' },
@@ -51,11 +51,11 @@ const initialData = {
         { order_id: 'd0000000-0000-0000-0000-000000000012', order_date: '2026-04-21T12:12:00Z', payment_status: 'Lunas', total_amount: 120000, customer_id: 'cust-1', event_id: 'ev-2', customerName: 'Rani Mulyani' }
     ],
     order_promotions: [
-        { order_promotion_id: 'op000000-0000-0000-0000-000000000001', promotion_id: 'p0000000-0000-0000-0000-000000000001', order_id: 'd0000000-0000-0000-0000-000000000001' },
-        { order_promotion_id: 'op000000-0000-0000-0000-000000000002', promotion_id: 'p0000000-0000-0000-0000-000000000002', order_id: 'd0000000-0000-0000-0000-000000000005' },
-        { order_promotion_id: 'op000000-0000-0000-0000-000000000003', promotion_id: 'p0000000-0000-0000-0000-000000000003', order_id: 'd0000000-0000-0000-0000-000000000007' },
-        { order_promotion_id: 'op000000-0000-0000-0000-000000000004', promotion_id: 'p0000000-0000-0000-0000-000000000001', order_id: 'd0000000-0000-0000-0000-000000000008' },
-        { order_promotion_id: 'op000000-0000-0000-0000-000000000005', promotion_id: 'p0000000-0000-0000-0000-000000000005', order_id: 'd0000000-0000-0000-0000-000000000011' }
+        { order_promotion_id: '22000000-0000-0000-0000-000000000001', promotion_id: 'f0000000-0000-0000-0000-000000000001', order_id: 'd0000000-0000-0000-0000-000000000001' },
+        { order_promotion_id: '22000000-0000-0000-0000-000000000002', promotion_id: 'f0000000-0000-0000-0000-000000000002', order_id: 'd0000000-0000-0000-0000-000000000005' },
+        { order_promotion_id: '22000000-0000-0000-0000-000000000003', promotion_id: 'f0000000-0000-0000-0000-000000000003', order_id: 'd0000000-0000-0000-0000-000000000007' },
+        { order_promotion_id: '22000000-0000-0000-0000-000000000004', promotion_id: 'f0000000-0000-0000-0000-000000000001', order_id: 'd0000000-0000-0000-0000-000000000008' },
+        { order_promotion_id: '22000000-0000-0000-0000-000000000005', promotion_id: 'f0000000-0000-0000-0000-000000000005', order_id: 'd0000000-0000-0000-0000-000000000011' }
     ],
     stats: {
         totalTickets: 120,
