@@ -21,9 +21,12 @@ const initialData = {
         { id: 'cat-3', eventId: 'ev-2', name: 'Regular Pass', quota: 2000, price: 100000, booked: 500 }
     ],
     seats: [
-        { id: 'seat-1', eventId: 'ev-1', number: 'A1', isAvailable: true },
-        { id: 'seat-2', eventId: 'ev-1', number: 'A2', isAvailable: true },
-        { id: 'seat-3', eventId: 'ev-1', number: 'A3', isAvailable: false }
+        { id: 'seat-1', venueId: 'ven-1', section: 'Utama', row: 'A', number: '1', isAvailable: true },
+        { id: 'seat-2', venueId: 'ven-1', section: 'Utama', row: 'A', number: '2', isAvailable: true },
+        { id: 'seat-3', venueId: 'ven-1', section: 'Utama', row: 'A', number: '3', isAvailable: false }
+    ],
+    tickets: [
+        { id: 'tkt-1', code: 'TKT-001', orderId: 'ord-1', eventId: 'ev-1', categoryId: 'cat-1', seatId: 'seat-3' }
     ],
     promotions: [
         { id: 'promo-1', code: 'TIKTAK20', type: 'Persentase', value: 20, startDate: '2026-01-01', endDate: '2026-12-31', limit: 100, used: 45 },
@@ -41,8 +44,21 @@ const initialData = {
 };
 
 function initDB() {
-    if (!localStorage.getItem('tiktaktuk_db')) {
+    let dbStr = localStorage.getItem('tiktaktuk_db');
+    if (!dbStr) {
         localStorage.setItem('tiktaktuk_db', JSON.stringify(initialData));
+    } else {
+        let db = JSON.parse(dbStr);
+        let updated = false;
+        for (let key in initialData) {
+            if (!db[key]) {
+                db[key] = initialData[key];
+                updated = true;
+            }
+        }
+        if (updated) {
+            localStorage.setItem('tiktaktuk_db', JSON.stringify(db));
+        }
     }
 }
 
@@ -107,12 +123,11 @@ function renderNavbar() {
             <a href="${baseUrl}pages/events.html">Cari Event</a>
             <a href="${baseUrl}pages/manage-events.html">Manajemen Event</a>
             <a href="${baseUrl}pages/venues.html">Manajemen Venue</a>
-            <a href="#">Manajemen Kursi</a>
+            <a href="${baseUrl}pages/manage-seats.html">Manajemen Kursi</a>
             <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
-            <a href="${baseUrl}pages/artists.html">Artists</a>
-            <a href="#">Manajemen Tiket</a>
+            <a href="${baseUrl}pages/manage-tickets.html">Manajemen Tiket</a>
             <a href="#">Semua Order</a>
-            <a href="#">Tiket (Aset)</a>
+            <a href="${baseUrl}pages/manage-tickets.html">Tiket (Aset)</a>
             <a href="#">Order (Aset)</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
@@ -123,26 +138,25 @@ function renderNavbar() {
             <a href="${baseUrl}pages/events.html">Cari Event</a>
             <a href="${baseUrl}pages/manage-events.html">Event Saya</a>
             <a href="${baseUrl}pages/venues.html">Manajemen Venue</a>
-            <a href="#">Manajemen Kursi</a>
+            <a href="${baseUrl}pages/manage-seats.html">Manajemen Kursi</a>
             <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
-            <a href="#">Manajemen Tiket</a>
+            <a href="${baseUrl}pages/manage-tickets.html">Manajemen Tiket</a>
             <a href="#">Semua Order</a>
-            <a href="#">Tiket (Aset)</a>
+            <a href="${baseUrl}pages/manage-tickets.html">Tiket (Aset)</a>
             <a href="#">Order (Aset)</a>
-            <a href="${baseUrl}pages/artists.html">Artists</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
     } else if (role === 'Customer') {
         navLinks = `
             <a href="${baseUrl}pages/profile.html">Dashboard</a>
-            <a href="#">Tiket Saya</a>
+            <a href="${baseUrl}pages/manage-tickets.html">Tiket Saya</a>
             <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
             <a href="${baseUrl}pages/orders.html">Pesanan</a>
             <a href="${baseUrl}pages/events.html">Cari Event</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
-            <a href="#">Venue</a>
-            <a href="${baseUrl}pages/artists.html">Artists</a>
+            <a href="${baseUrl}pages/venues.html">Venue</a>
+            <a href="${baseUrl}pages/artists.html">Artis</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
     }
