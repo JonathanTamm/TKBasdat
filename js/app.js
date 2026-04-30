@@ -8,6 +8,13 @@ const initialData = {
         { id: 'ev-1', name: 'Konser Melodi Senja', capacity: 500, location: 'Stadion Utama', date: '2026-08-15T19:00', organizerId: 'org-1', hasReservedSeating: true },
         { id: 'ev-2', name: 'Festival Kuliner Nusantara', capacity: 2000, location: 'Alun-alun Kota', date: '2026-09-01T10:00', organizerId: 'org-1', hasReservedSeating: false }
     ],
+    venues: [
+        { id: 'ven-1', name: 'Stadion Utama', capacity: 50000, address: 'Jl. Pemuda No. 1', city: 'Jakarta' },
+        { id: 'ven-2', name: 'Alun-alun Kota', capacity: 10000, address: 'Pusat Kota', city: 'Bandung' },
+        { id: 'ven-3', name: 'Gedung Kesenian', capacity: 500, address: 'Jl. Merdeka No. 10', city: 'Surabaya' },
+        { id: 'ven-4', name: 'Taman Budaya', capacity: 2000, address: 'Jl. Budaya No. 5', city: 'Yogyakarta' },
+        { id: 'ven-5', name: 'Hall Expo', capacity: 15000, address: 'Jl. Expo No. 99', city: 'Medan' }
+    ],
     categories: [
         { id: 'cat-1', eventId: 'ev-1', name: 'VIP', quota: 50, price: 1500000, booked: 20 },
         { id: 'cat-2', eventId: 'ev-1', name: 'Festival', quota: 450, price: 500000, booked: 100 },
@@ -51,7 +58,7 @@ function saveTable(tableName, data) {
 }
 
 function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
@@ -90,12 +97,16 @@ function renderNavbar() {
         navLinks = `
             <a href="${baseUrl}pages/login.html">Login</a>
             <a href="${baseUrl}pages/register.html">Registrasi</a>
+            <a href="${baseUrl}pages/events.html">Cari Event</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
+            <a href="${baseUrl}pages/venues.html">Venue</a>
         `;
     } else if (role === 'Admin') {
         navLinks = `
             <a href="${baseUrl}pages/profile.html">Dashboard</a>
-            <a href="#">Manajemen Venue</a>
+            <a href="${baseUrl}pages/events.html">Cari Event</a>
+            <a href="${baseUrl}pages/manage-events.html">Manajemen Event</a>
+            <a href="${baseUrl}pages/venues.html">Manajemen Venue</a>
             <a href="#">Manajemen Kursi</a>
             <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
             <a href="#">Manajemen Tiket</a>
@@ -108,8 +119,9 @@ function renderNavbar() {
     } else if (role === 'Organizer') {
         navLinks = `
             <a href="${baseUrl}pages/profile.html">Dashboard</a>
-            <a href="#">Event Saya</a>
-            <a href="#">Manajemen Venue</a>
+            <a href="${baseUrl}pages/events.html">Cari Event</a>
+            <a href="${baseUrl}pages/manage-events.html">Event Saya</a>
+            <a href="${baseUrl}pages/venues.html">Manajemen Venue</a>
             <a href="#">Manajemen Kursi</a>
             <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
             <a href="#">Manajemen Tiket</a>
@@ -127,7 +139,7 @@ function renderNavbar() {
             <a href="${baseUrl}pages/orders.html">Pesanan</a>
             <a href="${baseUrl}pages/events.html">Cari Event</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
-            <a href="#">Venue</a>
+            <a href="${baseUrl}pages/venues.html">Venue</a>
             <a href="${baseUrl}pages/artists.html">Artis</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
@@ -141,7 +153,7 @@ function renderNavbar() {
             </nav>
         </div>
     `;
-    
+
     const currentPage = window.location.pathname.split('/').pop();
     document.querySelectorAll('.nav-links a').forEach(link => {
         if (link.getAttribute('href').includes(currentPage) && currentPage !== '') {

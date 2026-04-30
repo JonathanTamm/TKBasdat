@@ -1,11 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    requireLogin();
-    const user = getCurrentUser();
-    if (user.role !== 'Customer') {
-        alert('Hanya Customer yang dapat membeli tiket.');
-        window.location.href = 'profile.html';
-        return;
-    }
     loadEvents();
 });
 
@@ -19,6 +12,12 @@ function loadEvents() {
         const dateStr = d.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         const timeStr = d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
         
+        let actionHtml = '';
+        const user = getCurrentUser();
+        if (user && user.role === 'Customer') {
+            actionHtml = `<a href="checkout.html?eventId=${ev.id}" class="btn btn-primary" style="text-align: center; display: block; margin-top: 1rem;">Beli Tiket</a>`;
+        }
+
         html += `
             <div class="card event-card">
                 <div>
@@ -28,7 +27,7 @@ function loadEvents() {
                         📅 ${dateStr} - ${timeStr}
                     </p>
                 </div>
-                <a href="checkout.html?eventId=${ev.id}" class="btn btn-primary" style="text-align: center; display: block; margin-top: 1rem;">Beli Tiket</a>
+                ${actionHtml}
             </div>
         `;
     });
