@@ -97,7 +97,7 @@ function renderNavbar() {
             <a href="${baseUrl}pages/profile.html">Dashboard</a>
             <a href="#">Manajemen Venue</a>
             <a href="#">Manajemen Kursi</a>
-            <a href="#">Kategori Tiket</a>
+            <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
             <a href="#">Manajemen Tiket</a>
             <a href="${baseUrl}pages/orders.html">Semua Order</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
@@ -113,7 +113,7 @@ function renderNavbar() {
             <a href="#">Event Saya</a>
             <a href="#">Manajemen Venue</a>
             <a href="#">Manajemen Kursi</a>
-            <a href="#">Kategori Tiket</a>
+            <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
             <a href="#">Manajemen Tiket</a>
             <a href="${baseUrl}pages/orders.html">Semua Order</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
@@ -127,6 +127,7 @@ function renderNavbar() {
         navLinks = `
             <a href="${baseUrl}pages/profile.html">Dashboard</a>
             <a href="#">Tiket Saya</a>
+            <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
             <a href="${baseUrl}pages/orders.html">Pesanan</a>
             <a href="${baseUrl}pages/events.html">Cari Event</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
