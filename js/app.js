@@ -29,12 +29,15 @@ const initialData = {
         { id: 'tkt-1', code: 'TKT-001', orderId: 'ord-1', eventId: 'ev-1', categoryId: 'cat-1', seatId: 'seat-3' }
     ],
     promotions: [
-        { id: 'promo-1', code: 'TIKTAK20', type: 'Persentase', value: 20, startDate: '2026-01-01', endDate: '2026-12-31', limit: 100, used: 45 },
-        { id: 'promo-2', code: 'HEMAT50K', type: 'Nominal', value: 50000, startDate: '2026-04-01', endDate: '2026-05-01', limit: 50, used: 50 }
+        { promotion_id: 'promo-1', promo_code: 'TIKTAK20', discount_type: 'PERCENTAGE', discount_value: 20, start_date: '2026-01-01', end_date: '2026-12-31', usage_limit: 100 },
+        { promotion_id: 'promo-2', promo_code: 'HEMAT50K', discount_type: 'NOMINAL', discount_value: 50000, start_date: '2026-04-01', end_date: '2026-05-01', usage_limit: 50 }
     ],
     orders: [
-        { id: 'ord-1', date: '2026-04-01T10:00:00Z', status: 'Lunas', amount: 3000000, customerId: 'cust-1', eventId: 'ev-1', customerName: 'Budi Santoso' },
-        { id: 'ord-2', date: '2026-04-20T11:30:00Z', status: 'Pending', amount: 500000, customerId: 'cust-1', eventId: 'ev-1', customerName: 'Budi Santoso' }
+        { order_id: 'ord-1', order_date: '2026-04-01T10:00:00Z', payment_status: 'Lunas', total_amount: 3000000, customer_id: 'cust-1', event_id: 'ev-1', customerName: 'Budi Santoso' },
+        { order_id: 'ord-2', order_date: '2026-04-20T11:30:00Z', payment_status: 'Pending', total_amount: 500000, customer_id: 'cust-1', event_id: 'ev-1', customerName: 'Budi Santoso' }
+    ],
+    order_promotions: [
+        { order_promotion_id: 'op-1', promotion_id: 'promo-1', order_id: 'ord-1' }
     ],
     stats: {
         totalTickets: 120,
@@ -45,7 +48,19 @@ const initialData = {
 
 function initDB() {
     let dbStr = localStorage.getItem('tiktaktuk_db');
-    if (!dbStr) {
+    let needsReset = false;
+    if (dbStr) {
+        try {
+            const db = JSON.parse(dbStr);
+            if (db.orders && db.orders.length > 0 && !db.orders[0].order_id) {
+                needsReset = true;
+            }
+        } catch(e) {
+            needsReset = true;
+        }
+    }
+    
+    if (!dbStr || needsReset) {
         localStorage.setItem('tiktaktuk_db', JSON.stringify(initialData));
     } else {
         let db = JSON.parse(dbStr);
@@ -126,9 +141,10 @@ function renderNavbar() {
             <a href="${baseUrl}pages/manage-seats.html">Manajemen Kursi</a>
             <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
             <a href="${baseUrl}pages/manage-tickets.html">Manajemen Tiket</a>
-            <a href="#">Semua Order</a>
+            <a href="${baseUrl}pages/orders.html">Semua Order</a>
+            <a href="${baseUrl}pages/promotions.html">Promosi</a>
             <a href="${baseUrl}pages/manage-tickets.html">Tiket (Aset)</a>
-            <a href="#">Order (Aset)</a>
+            <a href="${baseUrl}pages/orders.html">Order (Aset)</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
@@ -141,9 +157,10 @@ function renderNavbar() {
             <a href="${baseUrl}pages/manage-seats.html">Manajemen Kursi</a>
             <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
             <a href="${baseUrl}pages/manage-tickets.html">Manajemen Tiket</a>
-            <a href="#">Semua Order</a>
+            <a href="${baseUrl}pages/orders.html">Semua Order</a>
+            <a href="${baseUrl}pages/promotions.html">Promosi</a>
             <a href="${baseUrl}pages/manage-tickets.html">Tiket (Aset)</a>
-            <a href="#">Order (Aset)</a>
+            <a href="${baseUrl}pages/orders.html">Order (Aset)</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
