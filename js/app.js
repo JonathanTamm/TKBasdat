@@ -101,9 +101,11 @@ function renderNavbar() {
             <a href="#">Manajemen Tiket</a>
             <a href="${baseUrl}pages/orders.html">Semua Order</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
+            <a href="${baseUrl}pages/artists.html">Artis</a>
             <a href="#">Tiket (Aset)</a>
             <a href="#">Order (Aset)</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
+            <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
     } else if (role === 'Organizer') {
         navLinks = `
@@ -115,9 +117,11 @@ function renderNavbar() {
             <a href="#">Manajemen Tiket</a>
             <a href="${baseUrl}pages/orders.html">Semua Order</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
+            <a href="${baseUrl}pages/artists.html">Artis</a>
             <a href="#">Tiket (Aset)</a>
             <a href="#">Order (Aset)</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
+            <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
     } else if (role === 'Customer') {
         navLinks = `
@@ -127,7 +131,7 @@ function renderNavbar() {
             <a href="${baseUrl}pages/events.html">Cari Event</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
             <a href="#">Venue</a>
-            <a href="#">Artis</a>
+            <a href="${baseUrl}pages/artists.html">Artis</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
     }

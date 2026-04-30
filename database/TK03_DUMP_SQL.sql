@@ -62,6 +62,13 @@ CREATE TABLE Orders (
     promo_id UUID REFERENCES Promotions(id) ON DELETE SET NULL
 );
 
+-- 7. TABEL ARTIS (ARTISTS)
+CREATE TABLE Artists (
+    artist_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) NOT NULL,
+    genre VARCHAR(100)
+);
+
 --DUMMY DATA
 
 INSERT INTO Users (id, role, username, password, full_name, email, phone) VALUES 
@@ -88,3 +95,13 @@ INSERT INTO Seats (id, event_id, seat_number, is_available) VALUES
 INSERT INTO Orders (id, order_date, payment_status, total_amount, customer_id, event_id, promo_id) VALUES 
 ('cccccccc-cccc-cccc-cccc-cccccccccccc', '2026-04-01 10:00:00', 'Lunas', 3000000, '33333333-3333-3333-3333-333333333333', '66666666-6666-6666-6666-666666666666', NULL),
 ('dddddddd-dddd-dddd-dddd-dddddddddddd', '2026-04-20 11:30:00', 'Pending', 500000, '33333333-3333-3333-3333-333333333333', '66666666-6666-6666-6666-666666666666', '44444444-4444-4444-4444-444444444444');
+
+INSERT INTO Artists (artist_id, name, genre) VALUES 
+('e1111111-e111-e111-e111-e11111111111', 'Fourtwnty', 'Indie Folk'),
+('e2222222-e222-e222-e222-e22222222222', 'Hindia', 'Indie Pop'),
+('e3333333-e333-e333-e333-e33333333333', 'Tulus', 'Pop'),
+('e4444444-e444-e444-e444-e44444444444', 'Nadin Amizah', 'Folk'),
+('e5555555-e555-e555-e555-e55555555555', 'Pamungkas', 'Alternative/Indie'),
+('e6666666-e666-e666-e666-e66666666666', 'Raisa', 'Pop'),
+('e7777777-e777-e777-e777-e77777777777', 'Dewa 19', 'Rock'),
+('e8888888-e888-e888-e888-e88888888888', 'Sheila On 7', 'Pop Rock');
