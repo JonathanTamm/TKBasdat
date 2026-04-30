@@ -31,9 +31,9 @@ function renderPromos() {
     const totalPercent = promos.filter(p => p.type === 'Persentase').length;
 
     document.getElementById('promoStats').innerHTML = `
-        <div class="stat-card"><h3>${totalPromo}</h3><p>TOTAL PROMO</p></div>
-        <div class="stat-card"><h3>${totalUsed}</h3><p>TOTAL PENGGUNAAN</p></div>
-        <div class="stat-card"><h3>${totalPercent}</h3><p>TIPE PERSENTASE</p></div>
+        <div class="card feature-card"><h3>${totalPromo}</h3><p>TOTAL PROMO</p></div>
+        <div class="card feature-card"><h3>${totalUsed}</h3><p>TOTAL PENGGUNAAN</p></div>
+        <div class="card feature-card"><h3>${totalPercent}</h3><p>TIPE PERSENTASE</p></div>
     `;
 
     const tbody = document.getElementById('promoTbody');

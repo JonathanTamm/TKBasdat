@@ -40,14 +40,14 @@ function renderOrders() {
     let pending = orders.filter(o => o.status === 'Pending').length;
     
     let statsHtml = `
-        <div class="stat-card"><h3>${total}</h3><p>TOTAL ORDER</p></div>
-        <div class="stat-card"><h3>${lunas}</h3><p>LUNAS</p></div>
-        <div class="stat-card"><h3>${pending}</h3><p>PENDING</p></div>
+        <div class="card feature-card"><h3>${total}</h3><p>TOTAL ORDER</p></div>
+        <div class="card feature-card"><h3>${lunas}</h3><p>LUNAS</p></div>
+        <div class="card feature-card"><h3>${pending}</h3><p>PENDING</p></div>
     `;
 
     if (user.role === 'Admin' || user.role === 'Organizer') {
         let revenue = orders.filter(o => o.status === 'Lunas').reduce((sum, o) => sum + o.amount, 0);
-        statsHtml += `<div class="stat-card"><h3 style="color: var(--secondary)">${formatCurrency(revenue)}</h3><p>TOTAL REVENUE</p></div>`;
+        statsHtml += `<div class="card feature-card"><h3 style="color: var(--secondary)">${formatCurrency(revenue)}</h3><p>TOTAL REVENUE</p></div>`;
         document.getElementById('thPelanggan').style.display = 'table-cell';
     } else {
         document.getElementById('thPelanggan').style.display = 'none';

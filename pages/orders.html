@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Order - TikTakTuk</title>
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <header id="dynamicNavbar"></header>
@@ -12,7 +12,7 @@
     <main class="container">
         <h1 class="page-title">Daftar Order</h1>
 
-        <div class="stats-grid" id="orderStats">
+        <div class="features" id="orderStats">
             <!-- Stats panels injected here -->
         </div>
 
@@ -48,8 +48,8 @@
     </main>
 
     <!-- Modal Update Order -->
-    <div id="updateModal" class="modal">
-        <div class="modal-content">
+    <div id="updateModal" class="modal-backdrop">
+        <div class="modal">
             <h2 style="margin-bottom: 1.5rem; color: var(--primary);">Update Status Order</h2>
             <form id="updateForm">
                 <input type="hidden" id="updOrderId">
@@ -74,10 +74,10 @@
     </div>
 
     <!-- Modal Delete Order -->
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
+    <div id="deleteModal" class="modal-backdrop">
+        <div class="modal">
             <h2 style="margin-bottom: 1rem; color: var(--danger);">Hapus Order</h2>
-            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Apakah Anda yakin ingin menghapus catatan order ini? Tindakan ini tidak dapat dibatalkan.</p>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Apakah Anda yakin ingin menghapus catatan order ini? Tindakan ini tidak dapat dibatalkan.</p>
             <input type="hidden" id="delOrderId">
             <div style="display: flex; gap: 1rem; justify-content: flex-end;">
                 <button type="button" class="btn btn-secondary" onclick="closeModal('deleteModal')">Batal</button>

@@ -99,9 +99,7 @@ function renderNavbar() {
             <a href="#">Manajemen Kursi</a>
             <a href="#">Kategori Tiket</a>
             <a href="#">Manajemen Tiket</a>
-            <a href="${baseUrl}pages/orders.html">Semua Order</a>
-            <a href="${baseUrl}pages/promotions.html">Promosi</a>
-            <a href="${baseUrl}pages/artists.html">Artis</a>
+            <a href="#">Semua Order</a>
             <a href="#">Tiket (Aset)</a>
             <a href="#">Order (Aset)</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
@@ -115,9 +113,7 @@ function renderNavbar() {
             <a href="#">Manajemen Kursi</a>
             <a href="#">Kategori Tiket</a>
             <a href="#">Manajemen Tiket</a>
-            <a href="${baseUrl}pages/orders.html">Semua Order</a>
-            <a href="${baseUrl}pages/promotions.html">Promosi</a>
-            <a href="${baseUrl}pages/artists.html">Artis</a>
+            <a href="#">Semua Order</a>
             <a href="#">Tiket (Aset)</a>
             <a href="#">Order (Aset)</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
