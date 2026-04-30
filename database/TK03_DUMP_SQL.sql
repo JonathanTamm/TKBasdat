@@ -142,7 +142,7 @@ INSERT INTO Users (id, role, username, password, full_name, email, phone) VALUES
 
 INSERT INTO Promotions (id, promo_code, discount_type, discount_value, start_date, end_date, usage_limit, used_count) VALUES 
 ('44444444-4444-4444-4444-444444444444', 'TIKTAK20', 'Persentase', 20, '2026-01-01', '2026-12-31', 100, 45),
-('55555555-5555-5555-5555-555555555555', 'HEMAT50K', 'Nominal', 50000, '2026-04-01', '2026-05-01', 50, 50);
+('55555555-5555-5555-5555-555555555555', 'HEMAT50K', 'Nominal', 50000, '2y026-04-01', '2026-05-01', 50, 50);
 
 INSERT INTO Events (id, name, capacity, location, event_date, has_reserved_seating, organizer_id) VALUES 
 ('66666666-6666-6666-6666-666666666666', 'Konser Melodi Senja', 500, 'Stadion Utama', '2026-08-15 19:00:00', TRUE, '22222222-2222-2222-2222-222222222222'),
@@ -261,7 +261,7 @@ INSERT INTO ORDER_PROMOTION (order_promotion_id, promotion_id, order_id) VALUES
 -- Tabel VENUE
 CREATE TABLE VENUE (
     venue_id UUID PRIMARY KEY,
-    venue_name VARCHAR(150) NOT NULL,
+    venue_name VARCHAR(100) NOT NULL,
     capacity INT NOT NULL CHECK (capacity > 0),
     address TEXT NOT NULL,
     city VARCHAR(100) NOT NULL
@@ -271,7 +271,7 @@ CREATE TABLE VENUE (
 CREATE TABLE EVENT (
     event_id UUID PRIMARY KEY,
     event_time TIMESTAMP NOT NULL,
-    event_title VARCHAR(150) NOT NULL,
+    event_title VARCHAR(200) NOT NULL,
     venue_id UUID NOT NULL REFERENCES VENUE(venue_id),
     organizer_id UUID NOT NULL REFERENCES ORGANIZER(organizer_id)
 );
@@ -297,7 +297,7 @@ INSERT INTO EVENT (event_id, event_time, event_title, venue_id, organizer_id) VA
 CREATE TABLE TICKET_CATEGORY (
     category_id UUID PRIMARY KEY,
     event_id UUID NOT NULL REFERENCES EVENT(event_id),
-    category_name VARCHAR(100) NOT NULL,
+    category_name VARCHAR(50) NOT NULL,
     price NUMERIC(12,2) NOT NULL CHECK (price >= 0),
     quota INT NOT NULL CHECK (quota >= 0)
 );
@@ -315,15 +315,16 @@ CREATE TABLE SEAT (
 -- Tabel TICKET
 CREATE TABLE TICKET (
     ticket_id UUID PRIMARY KEY,
-    ticket_code VARCHAR(50) UNIQUE NOT NULL,
+    ticket_code VARCHAR(100) UNIQUE NOT NULL,
     order_id UUID NOT NULL REFERENCES "ORDER"(order_id),
     category_id UUID NOT NULL REFERENCES TICKET_CATEGORY(category_id)
 );
 
 -- Tabel HAS_RELATIONSHIP
 CREATE TABLE HAS_RELATIONSHIP (
-    ticket_id UUID PRIMARY KEY REFERENCES TICKET(ticket_id),
-    seat_id UUID NOT NULL REFERENCES SEAT(seat_id)
+    ticket_id UUID REFERENCES TICKET(ticket_id),
+    seat_id UUID UNIQUE REFERENCES SEAT(seat_id),
+    PRIMARY KEY (ticket_id, seat_id)
 );
 
 -- Insert 4 TICKET_CATEGORY
