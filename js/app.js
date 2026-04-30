@@ -98,6 +98,7 @@ function renderNavbar() {
             <a href="#">Manajemen Venue</a>
             <a href="#">Manajemen Kursi</a>
             <a href="${baseUrl}pages/ticket-categories.html">Kategori Tiket</a>
+            <a href="${baseUrl}pages/artists.html">Artists</a>
             <a href="#">Manajemen Tiket</a>
             <a href="#">Semua Order</a>
             <a href="#">Tiket (Aset)</a>
@@ -116,6 +117,7 @@ function renderNavbar() {
             <a href="#">Semua Order</a>
             <a href="#">Tiket (Aset)</a>
             <a href="#">Order (Aset)</a>
+            <a href="${baseUrl}pages/artists.html">Artists</a>
             <a href="${baseUrl}pages/profile.html" style="font-weight: bold;">Profile</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
@@ -128,7 +130,7 @@ function renderNavbar() {
             <a href="${baseUrl}pages/events.html">Cari Event</a>
             <a href="${baseUrl}pages/promotions.html">Promosi</a>
             <a href="#">Venue</a>
-            <a href="${baseUrl}pages/artists.html">Artis</a>
+            <a href="${baseUrl}pages/artists.html">Artists</a>
             <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
         `;
     }
