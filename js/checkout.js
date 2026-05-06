@@ -109,7 +109,7 @@ function applyPromo() {
     }
 
     const promos = getTable('promotions');
-    const promo = promos.find(p => p.code === code);
+    const promo = promos.find(p => p.promo_code === code);
 
     if (!promo) {
         msg.style.color = 'var(--danger)';
@@ -117,17 +117,20 @@ function applyPromo() {
         appliedPromo = null;
     } else {
         const today = new Date().toISOString().split('T')[0];
-        if (today < promo.startDate || today > promo.endDate) {
+        const order_promotions = getTable('order_promotions') || [];
+        const usedCount = order_promotions.filter(op => op.promotion_id === promo.promotion_id).length;
+        
+        if (today < promo.start_date || today > promo.end_date) {
             msg.style.color = 'var(--danger)';
             msg.innerText = 'Promo sudah kadaluarsa atau belum aktif.';
             appliedPromo = null;
-        } else if ((promo.used || 0) >= promo.limit) {
+        } else if (usedCount >= promo.usage_limit) {
             msg.style.color = 'var(--danger)';
             msg.innerText = 'Kuota promo sudah habis.';
             appliedPromo = null;
         } else {
             msg.style.color = 'var(--secondary)';
-            msg.innerText = `Promo ${promo.type} berhasil diterapkan!`;
+            msg.innerText = `Promo ${promo.discount_type} berhasil diterapkan!`;
             appliedPromo = promo;
         }
     }
@@ -142,10 +145,10 @@ function calculateTotal() {
     let discount = 0;
 
     if (appliedPromo) {
-        if (appliedPromo.type === 'Persentase') {
-            discount = subtotal * (appliedPromo.value / 100);
+        if (appliedPromo.discount_type === 'PERCENTAGE') {
+            discount = subtotal * (appliedPromo.discount_value / 100);
         } else {
-            discount = appliedPromo.value;
+            discount = appliedPromo.discount_value;
         }
         if (discount > subtotal) discount = subtotal;
     }
@@ -187,10 +190,10 @@ function processPayment() {
     let subtotal = selectedCategory.price * qty;
     let discount = 0;
     if (appliedPromo) {
-        if (appliedPromo.type === 'Persentase') {
-            discount = subtotal * (appliedPromo.value / 100);
+        if (appliedPromo.discount_type === 'PERCENTAGE') {
+            discount = subtotal * (appliedPromo.discount_value / 100);
         } else {
-            discount = appliedPromo.value;
+            discount = appliedPromo.discount_value;
         }
         if (discount > subtotal) discount = subtotal;
     }
@@ -200,25 +203,27 @@ function processPayment() {
     const user = getCurrentUser();
     
     const newOrder = {
-        id: generateUUID(),
-        date: new Date().toISOString(),
-        status: 'Pending',
-        amount: finalAmount,
-        customerId: user.id,
-        eventId: currentEvent.id,
+        order_id: generateUUID(),
+        order_date: new Date().toISOString(),
+        payment_status: 'Pending',
+        total_amount: finalAmount,
+        customer_id: user.id,
+        event_id: currentEvent.id,
         customerName: user.fullName || user.username
     };
 
     const orders = getTable('orders');
     orders.push(newOrder);
     saveTable('orders', orders);
+    
     if (appliedPromo) {
-        const promos = getTable('promotions');
-        const promoIndex = promos.findIndex(p => p.id === appliedPromo.id);
-        if (promoIndex !== -1) {
-            promos[promoIndex].used = (promos[promoIndex].used || 0) + 1;
-            saveTable('promotions', promos);
-        }
+        const op = getTable('order_promotions') || [];
+        op.push({
+            order_promotion_id: generateUUID(),
+            promotion_id: appliedPromo.promotion_id,
+            order_id: newOrder.order_id
+        });
+        saveTable('order_promotions', op);
     }
 
     alert('Pemesanan berhasil dibuat! Silakan lunasi pembayaran.');

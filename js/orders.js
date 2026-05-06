@@ -15,18 +15,18 @@ function getFilteredOrders() {
 
     if (user.role === 'Organizer') {
         const events = getTable('events').filter(e => e.organizerId === user.id).map(e => e.id);
-        orders = orders.filter(o => events.includes(o.eventId));
+        orders = orders.filter(o => events.includes(o.event_id));
     } else if (user.role === 'Customer') {
-        orders = orders.filter(o => o.customerId === user.id);
+        orders = orders.filter(o => o.customer_id === user.id);
     }
 
     const search = document.getElementById('searchOrderId').value.toLowerCase();
     const status = document.getElementById('filterStatus').value;
 
-    if (search) orders = orders.filter(o => o.id.toLowerCase().includes(search));
-    if (status) orders = orders.filter(o => o.status === status);
+    if (search) orders = orders.filter(o => o.order_id.toLowerCase().includes(search));
+    if (status) orders = orders.filter(o => o.payment_status === status);
 
-    orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+    orders.sort((a, b) => new Date(b.order_date) - new Date(a.order_date));
 
     return orders;
 }
@@ -36,18 +36,18 @@ function renderOrders() {
     const orders = getFilteredOrders();
     
     let total = orders.length;
-    let lunas = orders.filter(o => o.status === 'Lunas').length;
-    let pending = orders.filter(o => o.status === 'Pending').length;
+    let lunas = orders.filter(o => o.payment_status === 'Lunas').length;
+    let pending = orders.filter(o => o.payment_status === 'Pending').length;
     
     let statsHtml = `
-        <div class="stat-card"><h3>${total}</h3><p>TOTAL ORDER</p></div>
-        <div class="stat-card"><h3>${lunas}</h3><p>LUNAS</p></div>
-        <div class="stat-card"><h3>${pending}</h3><p>PENDING</p></div>
+        <div class="card feature-card"><h3>${total}</h3><p>TOTAL ORDER</p></div>
+        <div class="card feature-card"><h3>${lunas}</h3><p>LUNAS</p></div>
+        <div class="card feature-card"><h3>${pending}</h3><p>PENDING</p></div>
     `;
 
     if (user.role === 'Admin' || user.role === 'Organizer') {
-        let revenue = orders.filter(o => o.status === 'Lunas').reduce((sum, o) => sum + o.amount, 0);
-        statsHtml += `<div class="stat-card"><h3 style="color: var(--secondary)">${formatCurrency(revenue)}</h3><p>TOTAL REVENUE</p></div>`;
+        let revenue = orders.filter(o => o.payment_status === 'Lunas').reduce((sum, o) => sum + o.total_amount, 0);
+        statsHtml += `<div class="card feature-card"><h3 style="color: var(--secondary)">${formatCurrency(revenue)}</h3><p>TOTAL REVENUE</p></div>`;
         document.getElementById('thPelanggan').style.display = 'table-cell';
     } else {
         document.getElementById('thPelanggan').style.display = 'none';
@@ -68,16 +68,16 @@ function renderOrders() {
         html = `<tr><td colspan="6" style="text-align:center;">Tidak ada data order ditemukan.</td></tr>`;
     } else {
         orders.forEach(o => {
-            const d = new Date(o.date);
+            const d = new Date(o.order_date);
             const dateStr = d.toLocaleDateString('id-ID') + ' ' + d.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
             
             let statusBadge = '';
-            if (o.status === 'Lunas') statusBadge = `<span style="background: #e6f4ea; color: #1e8e3e; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">LUNAS</span>`;
-            else if (o.status === 'Pending') statusBadge = `<span style="background: #fef7e0; color: #f29900; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">PENDING</span>`;
+            if (o.payment_status === 'Lunas') statusBadge = `<span style="background: #e6f4ea; color: #1e8e3e; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">LUNAS</span>`;
+            else if (o.payment_status === 'Pending') statusBadge = `<span style="background: #fef7e0; color: #f29900; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">PENDING</span>`;
             else statusBadge = `<span style="background: #fce8e6; color: #d93025; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">DIBATALKAN</span>`;
 
             html += `<tr>
-                <td style="font-family: monospace; font-size: 0.875rem;">${o.id.split('-')[0]}...</td>
+                <td style="font-family: monospace; font-size: 0.875rem;">${o.order_id.split('-')[0]}...</td>
                 <td>${dateStr}</td>
             `;
 
@@ -87,14 +87,14 @@ function renderOrders() {
 
             html += `
                 <td>${statusBadge}</td>
-                <td style="font-weight: bold;">${formatCurrency(o.amount)}</td>
+                <td style="font-weight: bold;">${formatCurrency(o.total_amount)}</td>
             `;
 
             if (user.role === 'Admin') {
                 html += `
                     <td style="text-align: right;">
-                        <button onclick="openUpdateModal('${o.id}', '${o.status}')" style="background:none; border:none; cursor:pointer; color: var(--primary); margin-right: 0.5rem;" title="Edit">✏️</button>
-                        <button onclick="openDeleteModal('${o.id}')" style="background:none; border:none; cursor:pointer; color: var(--danger);" title="Hapus">🗑️</button>
+                        <button onclick="openUpdateModal('${o.order_id}', '${o.payment_status}')" style="background:none; border:none; cursor:pointer; color: var(--primary); margin-right: 0.5rem;" title="Edit">✏️</button>
+                        <button onclick="openDeleteModal('${o.order_id}')" style="background:none; border:none; cursor:pointer; color: var(--danger);" title="Hapus">🗑️</button>
                     </td>
                 `;
             }
@@ -117,9 +117,9 @@ function executeUpdateOrder(e) {
     const status = document.getElementById('updStatus').value;
 
     const orders = getTable('orders');
-    const idx = orders.findIndex(o => o.id === id);
+    const idx = orders.findIndex(o => o.order_id === id);
     if (idx !== -1) {
-        orders[idx].status = status;
+        orders[idx].payment_status = status;
         saveTable('orders', orders);
         closeModal('updateModal');
         renderOrders();
@@ -135,7 +135,7 @@ function openDeleteModal(id) {
 function executeDeleteOrder() {
     const id = document.getElementById('delOrderId').value;
     let orders = getTable('orders');
-    orders = orders.filter(o => o.id !== id);
+    orders = orders.filter(o => o.order_id !== id);
     saveTable('orders', orders);
     closeModal('deleteModal');
     renderOrders();
