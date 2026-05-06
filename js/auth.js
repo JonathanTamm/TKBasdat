@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-function handleLogin(e) {
+async function handleLogin(e) {
     e.preventDefault();
     const loginUsername = document.getElementById('loginUsername').value.trim();
     const password = document.getElementById('loginPassword').value;
@@ -36,14 +36,23 @@ function handleLogin(e) {
         return;
     }
 
-    const users = getTable('users');
-    const user = users.find(u => u.username === loginUsername && u.password === password);
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: loginUsername, password })
+        });
+        const result = await response.json();
 
-    if (user) {
-        localStorage.setItem('session_user', user.id);
-        window.location.href = 'profile.html'; 
-    } else {
-        errorDiv.innerText = 'Username atau Password salah.';
+        if (result.success) {
+            localStorage.setItem('session_user', result.user.id);
+            window.location.href = 'profile.html'; 
+        } else {
+            errorDiv.innerText = result.message || 'Username atau Password salah.';
+            errorDiv.classList.remove('d-none');
+        }
+    } catch (err) {
+        errorDiv.innerText = 'Terjadi kesalahan pada server.';
         errorDiv.classList.remove('d-none');
     }
 }
@@ -78,7 +87,7 @@ function updateRegisterForm(role) {
     }
 }
 
-function handleRegister(e) {
+async function handleRegister(e) {
     e.preventDefault();
     const errorDiv = document.getElementById('registerError');
     errorDiv.classList.add('d-none');
@@ -111,32 +120,33 @@ function handleRegister(e) {
         return;
     }
 
-    const users = getTable('users');
-    if (users.find(u => u.username === username)) {
-        errorDiv.innerText = 'Username sudah terdaftar.';
-        errorDiv.classList.remove('d-none');
-        return;
-    }
-    
-    if (role !== 'Admin' && users.find(u => u.email === email && u.email !== '')) {
-        errorDiv.innerText = 'Email sudah terdaftar.';
-        errorDiv.classList.remove('d-none');
-        return;
-    }
-
     const newUser = {
-        id: generateUUID(),
         role: role,
         username: username,
         password: password,
-        fullName: fullName || '-',
-        email: email || '-',
-        phone: phone || '-'
+        full_name: fullName || '-',
+        email: email || null,
+        phone: phone || null
     };
 
-    users.push(newUser);
-    saveTable('users', users);
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newUser)
+        });
+        const result = await response.json();
 
-    alert('Registrasi berhasil! Silakan login.');
-    window.location.href = 'login.html';
+        if (result.success) {
+            alert('Registrasi berhasil! Silakan login.');
+            window.location.href = 'login.html';
+        } else {
+            // Tampilkan pesan error dari PostgreSQL Trigger
+            errorDiv.innerText = result.message;
+            errorDiv.classList.remove('d-none');
+        }
+    } catch (err) {
+        errorDiv.innerText = 'Terjadi kesalahan pada server.';
+        errorDiv.classList.remove('d-none');
+    }
 }
