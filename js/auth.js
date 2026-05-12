@@ -46,6 +46,7 @@ async function handleLogin(e) {
 
         if (result.success) {
             localStorage.setItem('session_user', result.user.id);
+            localStorage.setItem('current_user_data', JSON.stringify(result.user));
             window.location.href = 'profile.html'; 
         } else {
             errorDiv.innerText = result.message || 'Username atau Password salah.';
