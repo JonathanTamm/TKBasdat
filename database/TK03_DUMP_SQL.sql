@@ -330,3 +330,4 @@ INSERT INTO ARTISTS (artist_id, name, genre) VALUES
 ('a0000000-0000-0000-0000-000000000002', 'DJ Spinna', 'Electronic'),
 ('a0000000-0000-0000-0000-000000000003', 'Sari Rahayu', 'Pop'),
 ('a0000000-0000-0000-0000-000000000004', 'Gamelan Ensemble', 'Traditional');
+

@@ -61,8 +61,8 @@ router.post('/', async (req, res) => {
 
     try {
         const query = `
-            INSERT INTO VENUE (venue_name, capacity, address, city)
-            VALUES ($1, $2, $3, $4)
+            INSERT INTO VENUE (venue_id, venue_name, capacity, address, city)
+            VALUES (gen_random_uuid(), $1, $2, $3, $4)
             RETURNING venue_id, venue_name, capacity, address, city
         `;
         
