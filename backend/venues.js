@@ -14,9 +14,7 @@ router.get('/', async (req, res) => {
                 venue_name,
                 capacity,
                 address,
-                city,
-                created_at,
-                updated_at
+                city
             FROM VENUE
             ORDER BY city, venue_name ASC
         `;
@@ -65,7 +63,7 @@ router.post('/', async (req, res) => {
         const query = `
             INSERT INTO VENUE (venue_name, capacity, address, city)
             VALUES ($1, $2, $3, $4)
-            RETURNING venue_id, venue_name, capacity, address, city, created_at, updated_at
+            RETURNING venue_id, venue_name, capacity, address, city
         `;
         
         const result = await db.query(query, [venue_name, capacity, address, city]);
@@ -146,9 +144,9 @@ router.put('/:id', async (req, res) => {
 
         const query = `
             UPDATE VENUE
-            SET venue_name = $1, capacity = $2, address = $3, city = $4, updated_at = CURRENT_TIMESTAMP
+            SET venue_name = $1, capacity = $2, address = $3, city = $4
             WHERE venue_id = $5
-            RETURNING venue_id, venue_name, capacity, address, city, created_at, updated_at
+            RETURNING venue_id, venue_name, capacity, address, city
         `;
         
         const result = await db.query(query, [venue_name, capacity, address, city, id]);
@@ -261,9 +259,7 @@ router.get('/:id', async (req, res) => {
                 venue_name,
                 capacity,
                 address,
-                city,
-                created_at,
-                updated_at
+                city
             FROM VENUE
             WHERE venue_id = $1
         `;
