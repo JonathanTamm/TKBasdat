@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const db = require('./db');
+const venuesRouter = require('./venues');
 require('dotenv').config();
 
 const app = express();
@@ -11,6 +12,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../')));
+
+// ✅ ROUTE UNTUK MANAJEMEN VENUE (TK04)
+app.use('/api/venues', venuesRouter);
 
 app.post('/api/register', async (req, res) => {
     const { role, username, password, full_name, email, phone } = req.body;
