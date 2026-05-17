@@ -3,9 +3,6 @@ const db = require('./db');
 
 const router = express.Router();
 
-// ==============================================================================
-// ENDPOINT 1: GET /api/venues - Lihat Daftar Venue
-// ==============================================================================
 router.get('/', async (req, res) => {
     try {
         const query = `
@@ -38,9 +35,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// ==============================================================================
-// ENDPOINT 2: POST /api/venues - Tambah Venue
-// ==============================================================================
 router.post('/', async (req, res) => {
     const { venue_name, capacity, address, city } = req.body;
 
@@ -77,8 +71,8 @@ router.post('/', async (req, res) => {
     } catch (error) {
         console.error('POST /api/venues Error:', error.message);
         
-        // ✅ MENANGKAP ERROR DARI TRIGGER POSTGRESQL
-        // Trigger akan melempar exception dengan format:
+        // menangkap error dari trigger postgresql
+        // trigger akan melempar exception dengan format:
         // "Venue '<nama_venue>' di kota '<nama_kota>' sudah terdaftar dengan ID <id_venue>."
         
         const triggerErrorMessage = error.message;
@@ -99,9 +93,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// ==============================================================================
-// ENDPOINT 3: PUT /api/venues/:id - Edit Venue
-// ==============================================================================
+// PUT /api/venues/:id - Edit Venue
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { venue_name, capacity, address, city } = req.body;
