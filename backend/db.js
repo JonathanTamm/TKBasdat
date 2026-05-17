@@ -4,7 +4,9 @@ require('dotenv').config();
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgres://localhost:5432/tkbasdat',
   // SSL dimatikan untuk koneksi lokal
-  ssl: false
+  ssl: {
+    rejectUnauthorized: false,
+  }
 });
 
 pool.connect((err, client, release) => {
