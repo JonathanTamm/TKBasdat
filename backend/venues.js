@@ -152,7 +152,7 @@ router.put('/:id', async (req, res) => {
     } catch (error) {
         console.error('PUT /api/venues/:id Error:', error.message);
         
-        // ✅ MENANGKAP ERROR DARI TRIGGER POSTGRESQL (Duplikasi)
+        // MENANGKAP ERROR DARI TRIGGER POSTGRESQL (Duplikasi)
         const triggerErrorMessage = error.message;
         
         if (triggerErrorMessage.includes('sudah terdaftar dengan ID')) {
@@ -170,9 +170,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// ==============================================================================
-// ENDPOINT 4: DELETE /api/venues/:id - Hapus Venue
-// ==============================================================================
+//DELETE /api/venues/:id - Hapus Venue
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -211,7 +209,7 @@ router.delete('/:id', async (req, res) => {
     } catch (error) {
         console.error('DELETE /api/venues/:id Error:', error.message);
         
-        // ✅ MENANGKAP ERROR DARI TRIGGER POSTGRESQL (Venue masih aktif)
+        // MENANGKAP ERROR DARI TRIGGER POSTGRESQL (Venue masih aktif)
         const triggerErrorMessage = error.message;
         
         if (triggerErrorMessage.includes('masih memiliki event aktif')) {
